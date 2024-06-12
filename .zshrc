@@ -32,8 +32,8 @@ alias code="code-insiders"
 alias grun="go run"
 alias cat="bat --style plain,header-filesize,header-filename,grid"
 
-alias opacity-on="sed -i 's/opacity=/opacity=/g' ~/.var/app/org.gnome.Ptyxis.Devel/config/glib-2.0/settings/keyfile"
-alias opacity-off="sed -i 's/opacity=/opacity=/g' ~/.var/app/org.gnome.Ptyxis.Devel/config/glib-2.0/settings/keyfile"
+alias opacity-on="sed -i 's/#opacity=/opacity=/g' ~/.var/app/org.gnome.Ptyxis.Devel/config/glib-2.0/settings/keyfile"
+alias opacity-off="sed -i 's/opacity=/#opacity=/g' ~/.var/app/org.gnome.Ptyxis.Devel/config/glib-2.0/settings/keyfile"
 
 alias vim="neovide --fork"
 alias nvim="neovide --fork"
