@@ -19,7 +19,7 @@ zstyle ':omz:update' mode auto      # update automatically without asking
 # ENABLE_CORRECTION="true"
 
 # Fix for nvm slowing down zsh load by about 200ms
-zstyle ':omz:plugins:nvm' lazy yes
+# zstyle ':omz:plugins:nvm' lazy yes
 
 plugins=(git virtualenv zsh-autosuggestions themes asdf)
 
@@ -37,6 +37,7 @@ alias opacity-off="sed -i 's/opacity=/opacity=/g' ~/.var/app/org.gnome.Ptyxis.De
 
 alias vim="neovide --fork"
 alias nvim="neovide --fork"
+
 # Bun Completions
 [ -s "/home/r3dlust/.bun/_bun" ] && source "/home/r3dlust/.bun/_bun"
 
