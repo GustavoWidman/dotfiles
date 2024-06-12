@@ -1,0 +1,59 @@
+-- Autocmds are automatically loaded on the VeryLazy event
+-- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
+-- Add any additional autocmds here
+
+local highlight = {
+	'that_one_color',
+}
+
+local scope = {
+	'RainbowRed',
+	'RainbowYellow',
+	'RainbowBlue',
+	'RainbowOrange',
+	'RainbowGreen',
+	'RainbowViolet',
+	'RainbowCyan',
+}
+
+local hooks = require('ibl.hooks')
+
+hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+	vim.api.nvim_set_hl(0, 'that_one_color', { fg = '#242a35' })
+	vim.api.nvim_set_hl(0, 'RainbowRed', { fg = '#E06C75' })
+	vim.api.nvim_set_hl(0, 'RainbowYellow', { fg = '#E5C07B' })
+	vim.api.nvim_set_hl(0, 'RainbowBlue', { fg = '#61AFEF' })
+	vim.api.nvim_set_hl(0, 'RainbowOrange', { fg = '#D19A66' })
+	vim.api.nvim_set_hl(0, 'RainbowGreen', { fg = '#98C379' })
+	vim.api.nvim_set_hl(0, 'RainbowViolet', { fg = '#C678DD' })
+	vim.api.nvim_set_hl(0, 'RainbowCyan', { fg = '#56B6C2' })
+end)
+
+require('ibl').setup({
+	indent = {
+		char = '│',
+		tab_char = '│',
+		highlight = highlight,
+	},
+	-- scope = { show_start = false, show_end = false },
+	scope = { highlight = highlight, show_start = false, show_end = false },
+	exclude = {
+		filetypes = {
+			'help',
+			'alpha',
+			'dashboard',
+			'neo-tree',
+			'Trouble',
+			'trouble',
+			'lazy',
+			'mason',
+			'notify',
+			'toggleterm',
+			'lazyterm',
+		},
+	},
+})
+
+hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
+
+-- vim.api.nvim_del_augroup_by_name('lazyvim_wrap_spell')
