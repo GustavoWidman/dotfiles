@@ -19,3 +19,22 @@ Para instalar os arquivos de configuração, você pode clonar esse repositório
 
 ```bash
 git clone https://github.com/GustavoWidman/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+```
+
+Agora você pode utilizar o GNU Stow para criar os links simbólicos.
+
+```bash
+stow .
+```
+
+Pronto! Agora você tem os meus arquivos de configuração instalados no seu sistema.
+
+## Atualização
+
+Para atualizar os arquivos de configuração, você pode utilizar o Git para baixar as atualizações e os arquivos serão atualizados automaticamente, ja que os links simbólicos apontam para o repositório.
+
+```bash
+cd ~/.dotfiles
+git pull
+```
