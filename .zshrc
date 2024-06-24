@@ -21,7 +21,7 @@ zstyle ':omz:update' mode auto      # update automatically without asking
 # Fix for nvm slowing down zsh load by about 200ms
 # zstyle ':omz:plugins:nvm' lazy yes
 
-plugins=(git virtualenv zsh-autosuggestions themes asdf)
+plugins=(git virtualenv zsh-autosuggestions themes)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -29,6 +29,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Aliases
 alias code="code-insiders"
+alias zed="zeditor"
 alias grun="go run"
 alias cat="bat --style plain,header-filesize,header-filename,grid"
 
@@ -38,18 +39,23 @@ alias opacity-off="sed -i 's/opacity=/#opacity=/g' ~/.var/app/org.gnome.Ptyxis.D
 alias vim="neovide --fork"
 alias nvim="neovide --fork"
 
+# $HOME that works for root and non-root, referring to the same place (get the $HOME of the first non-root user) uses awk from the "users" command
+TRUE_HOME="/home/$(users | awk '{print $1}')"
+
 # Bun Completions
-[ -s "/home/r3dlust/.bun/_bun" ] && source "/home/r3dlust/.bun/_bun"
+[ -s "$TRUE_HOME/.bun/_bun" ] && source "$TRUE_HOME/.bun/_bun"
 
 # Bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$HOME/.local/bin:$PATH"
+export BUN_INSTALL="$TRUE_HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$TRUE_HOME/.local/bin:$PATH"
 
 # Rust
 . "$HOME/.cargo/env"
 
 # FZF
-eval "$(fzf --zsh)"
+# eval "$(fzf --zsh)"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsheval "$($TRUE_HOME/.local/bin/mise activate zsh)"
+
+eval "$($TRUE_HOME/.local/bin/mise activate zsh)"
