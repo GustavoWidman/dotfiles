@@ -40,7 +40,7 @@ alias vim="neovide --fork"
 alias nvim="neovide --fork"
 
 # $HOME that works for root and non-root, referring to the same place (get the $HOME of the first non-root user) uses awk from the "users" command
-TRUE_HOME="/home/$(users | awk '{print $1}')"
+TRUE_HOME=$(grep -m1 '/home/' /etc/passwd | cut -d: -f6)
 
 # Bun Completions
 [ -s "$TRUE_HOME/.bun/_bun" ] && source "$TRUE_HOME/.bun/_bun"
