@@ -1,0 +1,36 @@
+# Theme
+# theme = GruvboxDark
+theme = Dracula
+
+# Keybinds
+keybind = super+e=new_tab
+
+# Font and Colors
+font-family="Fira Code Regular"
+font-size=18
+window-colorspace=display-p3
+
+# Fullscreen the window by default
+window-height=42
+window-width=150
+
+# Background Opacity (see-through)
+background-opacity=0.85
+# background-opacity=0.9
+
+# Bar cursor style
+cursor-style=bar
+
+# Hide mouse while typing
+shell-integration-features = no-cursor
+mouse-hide-while-typing=true
+
+# OPT+Click moves cursor
+cursor-click-to-move=true
+
+# Fancy Titlebar
+macos-titlebar-proxy-icon=hidden
+macos-titlebar-style=tabs
+
+# Hide the "lock" icon thing
+macos-secure-input-indication=false
