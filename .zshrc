@@ -138,3 +138,13 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 # ls -> ls -a
 alias ls="ls -Ga"
+
+# Git Push default to SSH (check .gitconfig)
+function git() {
+    if [[ "$1" == "push" ]]; then
+        shift
+        command git push-ssh "$@"
+    else
+        command git "$@"
+    fi
+}
