@@ -34,3 +34,6 @@ macos-titlebar-style=tabs
 
 # Hide the "lock" icon thing
 macos-secure-input-indication=false
+
+# Compat Sudo thing
+shell-integration-features = sudo

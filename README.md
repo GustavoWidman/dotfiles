@@ -25,8 +25,18 @@ cd ~/.dotfiles
 Agora você pode utilizar o GNU Stow para criar os links simbólicos.
 
 ```bash
-stow .
+stow -t ~ home # criar symlinks para os arquivos que ficam no home
+sudo stow -t /root root # criar symlinks para arquivos que ficam em /root (necessita sudo)
 ```
+
+Voce tambem pode usar os scripts de ativacao e desativacao para facilitar o seu processo.
+
+```bash
+./activate.sh # ativa os symlinks
+./deactivate.sh # desativa os symlinks
+```
+
+Como eles usam sudo para criar e remover os symlinks de /etc, voce tera que inserir sua senha quando for roda-los.
 
 Pronto! Agora você tem os meus arquivos de configuração instalados no seu sistema.
 
