@@ -137,7 +137,9 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
 # ls -> ls -a
-alias ls="ls -Ga"
+# alias ls="ls -Ga"
+# GNU ls for MacOS
+alias ls="gls --color=auto -a"
 
 # Git Push default to SSH (check .gitconfig)
 function git() {
