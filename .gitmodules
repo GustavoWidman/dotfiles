@@ -1,3 +1,10 @@
 [submodule "home/.nano"]
 	url = https://github.com/galenguyer/nano-syntax-highlighting
 	path = home/.nano
+
+#[submodule "home/.oh-my-zsh/custom/plugins/zsh-autosuggestions"]
+#	url = https://github.com/zsh-users/zsh-autosuggestions
+#	path = home/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+[submodule "home/.oh-my-zsh/custom/plugins/zsh-autosuggestions"]
+	path = home/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions
