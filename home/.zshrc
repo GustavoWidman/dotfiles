@@ -32,7 +32,7 @@ source $ZSH/oh-my-zsh.sh
 # alias code-insiders="/usr/local/bin/code-update"
 # alias code="/usr/local/bin/code-update"
 alias grun="go run"
-alias cat="bat --style plain,header-filesize,header-filename,grid"
+alias cat="bat --style plain,header-filesize,header-filename --paging=never"
 
 alias vim="neovide --fork"
 alias nvim="neovide --fork"
@@ -110,6 +110,7 @@ export PATH="$BUN_INSTALL/bin:$TRUE_HOME/.local/bin:$PATH"
 
 # Rust
 . "$HOME/.cargo/env"
+. /Users/r3dlust/export-esp.sh # esp toolkit
 
 # FZF
 # eval "$(fzf --zsh)"
@@ -139,7 +140,7 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # ls -> ls -a
 # alias ls="ls -Ga"
 # GNU ls for MacOS
-alias ls="gls --color=auto -a"
+alias ls="gls --color=auto"
 
 # Git Push default to SSH (check .gitconfig)
 function git() {
