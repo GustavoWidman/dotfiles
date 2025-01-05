@@ -1,5 +1,8 @@
 # r3dlust's universal ZSHRC
 
+# Profiling (leave off normally)
+# zmodload zsh/zprof
+
 export ZSH="$HOME/.oh-my-zsh"
 
 OS="$(uname)"
@@ -14,11 +17,9 @@ fi)
 
 source $TRUE_HOME/.config/zsh-utils/user-color.zsh # set term prompt color there
 
-zstyle ':omz:update' mode auto      # update automatically without asking
+zstyle ':omz:update' auto      # update automatically without asking
 
 plugins=(git virtualenv zsh-autosuggestions themes)
-
-
 
 source $ZSH/oh-my-zsh.sh
 
@@ -34,9 +35,19 @@ alias nvim="neovide --fork"
 alias pchain="proxychains -q"
 alias pssh="proxychains -q ssh"
 
-source $TRUE_HOME/.config/zsh-utils/scripts/javar.zsh # Java Run (quick build and then run a Java file)
-source $TRUE_HOME/.config/zsh-utils/scripts/crun.zsh # C-Run (quick build and then run a C file)
+# Lazy load Javar
+javar() {
+	source $TRUE_HOME/.config/zsh-utils/scripts/javar.zsh # Java Run (quick build and then run a Java file)
 
+	javar "$@"
+}
+
+# Lazy load Crun
+crun() {
+	source $TRUE_HOME/.config/zsh-utils/scripts/crun.zsh # C-Run (quick build and then run a C file)
+
+	crun "$@"
+}
 
 # Bun Completions
 [ -s "$TRUE_HOME/.bun/_bun" ] && source "$TRUE_HOME/.bun/_bun"
@@ -70,5 +81,8 @@ eval "$($TRUE_HOME/.local/bin/mise activate zsh)"
 source $TRUE_HOME/.config/zsh-utils/scripts/ls-redef.zsh
 
 # Git Push default to SSH (check .gitconfig)
-source $TRUE_HOME/.config/zsh-utils/scripts/git-redef.zsh
 source $TRUE_HOME/.config/zsh-utils/scripts/git-auto-hostname.zsh
+source $TRUE_HOME/.config/zsh-utils/scripts/git-redef.zsh
+
+# Profiling (leave off normally)
+# zprof
