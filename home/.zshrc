@@ -10,7 +10,8 @@ ZSH_THEME="r3dlust"
 
 # $HOME that works for root and non-root, referring to the same place (get the $HOME of the first non-root user) uses awk from the "users" command
 TRUE_HOME=$(if [[ "$OS" == "Darwin" ]]; then
-	dscl . -read "/Users/$(logname)" NFSHomeDirectory | cut -d' ' -f2
+	# may god have mercy on my soul what the fuck is this :sob:
+	dscl . -list /Users UniqueID | awk '$2 >= 501 { print $1 }' | head -n 1 | xargs -I {} dscl . -read /Users/{} NFSHomeDirectory | awk '{ print $2 }'
 else
 	grep -m1 '/home/' /etc/passwd | cut -d: -f6
 fi)
