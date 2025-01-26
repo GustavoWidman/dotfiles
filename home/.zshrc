@@ -65,6 +65,7 @@ if [[ "$OS" == "Darwin" ]]; then
 	# MacOS Rust ESP32 toolkit
 	. $TRUE_HOME/export-esp.sh
 	export PATH="/Applications/UTM.app/Contents/MacOS:$PATH" # UTM on PATH
+	alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale" # tailscale fix
 fi
 
 # FZF
