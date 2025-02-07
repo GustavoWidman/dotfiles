@@ -66,6 +66,7 @@ if [[ "$OS" == "Darwin" ]]; then
 	. $TRUE_HOME/export-esp.sh
 	export PATH="/Applications/UTM.app/Contents/MacOS:$PATH" # UTM on PATH
 	alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale" # tailscale fix
+	export HOMEBREW_NO_ENV_HINTS=TRUE
 fi
 
 # FZF
