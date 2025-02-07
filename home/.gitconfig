@@ -1,7 +1,7 @@
 [user]
 	email = gustavo.widman@sou.inteli.edu.br
 	name = GustavoWidman (vm-arch)
-	signingkey = /Users/r3dlust/.ssh/gh-gustavowidman.pub
+	signingkey = ~/.ssh/gh-gustavowidman.pub
 
 [commit]
 	gpgsign = true
@@ -22,3 +22,6 @@
 
 [gpg]
 	format = ssh
+
+[push]
+	autoSetupRemote = true
