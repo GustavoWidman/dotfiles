@@ -82,6 +82,10 @@ eval "$($TRUE_HOME/.local/bin/mise activate zsh)"
 # ls patches (MacOS/Linux compat and ls -a auto fallback as well as coloring)
 source $TRUE_HOME/.config/zsh-utils/scripts/ls-redef.zsh
 
+if [[ "$OS" == "Linux" ]]; then
+	unalias ls
+fi
+
 # Git Push default to SSH (check .gitconfig)
 source $TRUE_HOME/.config/zsh-utils/scripts/git-auto-hostname.zsh
 source $TRUE_HOME/.config/zsh-utils/scripts/git-redef.zsh

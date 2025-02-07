@@ -1,7 +1,7 @@
 # Default ls to color. If there are no results of "ls", use "ls -a"
 function ls() {
 	# Compat with Linux and MacOS
-	local ls_cmd="ls"  # Default to `ls`
+	local ls_cmd="/bin/ls"  # Default to `ls`
 
 	if [[ "$(uname)" == "Darwin" ]]; then
 		ls_cmd="gls"  # Use `gls` (GNU-ls) on macOS. Requires 'coreutils' on homebrew.

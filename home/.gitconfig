@@ -1,6 +1,6 @@
 [user]
 	email = gustavo.widman@sou.inteli.edu.br
-	name = GustavoWidman (laptop-mac)
+	name = GustavoWidman (vm-arch)
 	signingkey = /Users/r3dlust/.ssh/gh-gustavowidman.pub
 
 [commit]
@@ -12,10 +12,10 @@
 
 # Doing this instead
 [alias]
-    pull-https = !git -c url.https://github.com/.insteadOf=git@github.com: pull
-    push-https = !git -c url.https://github.com/.insteadOf=git@github.com: push
-    pull-ssh = !git -c url.git@github.com:.insteadOf=https://github.com: pull
-    push-ssh = !git -c url.git@github.com:.insteadOf=https://github.com/ push
+	pull-https = !git -c url.https://github.com/.insteadOf=git@github.com: pull
+	push-https = !git -c url.https://github.com/.insteadOf=git@github.com: push
+	pull-ssh = !git -c url.git@github.com:.insteadOf=https://github.com/ pull
+	push-ssh = !git -c url.git@github.com:.insteadOf=https://github.com/ push
 
 [init]
 	defaultBranch = main
