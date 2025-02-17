@@ -36,4 +36,4 @@ macos-titlebar-style=tabs
 macos-secure-input-indication=false
 
 # Compat Sudo thing
-# shell-integration-features = sudo
+shell-integration-features = sudo

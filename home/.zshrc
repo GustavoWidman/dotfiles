@@ -36,6 +36,33 @@ alias nvim="neovide --fork"
 alias pchain="proxychains -q"
 alias pssh="proxychains -q ssh"
 
+# Zoxide (Lazy Load)
+cd () {
+	unset cd
+
+	eval "$(zoxide init zsh --cmd cd)"
+
+	cd "$@"
+}
+
+# Python UV+Mise venv
+python3() {
+	# if VIRTUAL_ENV is set, then use it
+	if [[ -n "$VIRTUAL_ENV" ]]; then
+		command uv run python3 "$@"
+	else
+		command python3 "$@"
+	fi
+}
+python() {
+	# if VIRTUAL_ENV is set, then use it
+	if [[ -n "$VIRTUAL_ENV" ]]; then
+		command uv run python "$@"
+	else
+		command python "$@"
+	fi
+}
+
 # Lazy load Javar
 javar() {
 	source $TRUE_HOME/.config/zsh-utils/scripts/javar.zsh # Java Run (quick build and then run a Java file)
@@ -65,6 +92,9 @@ if [[ "$OS" == "Darwin" ]]; then
 	# MacOS Rust ESP32 toolkit
 	. $TRUE_HOME/export-esp.sh
 	export PATH="/Applications/UTM.app/Contents/MacOS:$PATH" # UTM on PATH
+	# MacOS e2fsprogs
+	export PATH="/opt/homebrew/opt/e2fsprogs/bin:$PATH"
+  	export PATH="/opt/homebrew/opt/e2fsprogs/sbin:$PATH"
 	alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale" # tailscale fix
 	export HOMEBREW_NO_ENV_HINTS=TRUE
 fi
