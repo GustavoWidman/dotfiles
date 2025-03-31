@@ -35,5 +35,10 @@ macos-titlebar-style=tabs
 # Hide the "lock" icon thing
 macos-secure-input-indication=false
 
+
+# Run with nushell
+command = env XDG_CONFIG_HOME="$HOME/.config" /opt/homebrew/bin/nu
+shell-integration = none
+
 # Compat Sudo thing
 shell-integration-features = sudo

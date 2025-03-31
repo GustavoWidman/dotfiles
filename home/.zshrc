@@ -4,6 +4,7 @@
 # zmodload zsh/zprof
 
 export ZSH="$HOME/.oh-my-zsh"
+export XDG_CONFIG_HOME="$HOME/.config"
 
 OS="$(uname)"
 ZSH_THEME="r3dlust"
@@ -123,3 +124,6 @@ source $TRUE_HOME/.config/zsh-utils/scripts/git-redef.zsh
 
 # Profiling (leave off normally)
 # zprof
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/r3dlust/.lmstudio/bin"

@@ -6,11 +6,6 @@
 [commit]
 	gpgsign = true
 
-# Breaks pulls sometimes
-#[url "git@github.com:"]
-#	insteadOf = https://github.com/
-
-# Doing this instead
 [alias]
 	pull-https = !git -c url.https://github.com/.insteadOf=git@github.com: pull
 	push-https = !git -c url.https://github.com/.insteadOf=git@github.com: push
