@@ -19,16 +19,22 @@ mut path = [
 	$"($env.TRUE_HOME)/.local/bin",
 	$"($env.TRUE_HOME)/.cargo/bin"
 	"/usr/local/bin",
+	$"($env.TRUE_HOME)/.cabal/bin",
+	$"($env.HOME)/.ghcup/bin",
 ]
 
 if $env.OS == "Darwin" {
 	$path ++= [
 		"/Applications/UTM.app/Contents/MacOS",
 		"/opt/homebrew/opt/e2fsprogs/bin",
-		"/opt/homebrew/opt/e2fsprogs/sbin"
+		"/opt/homebrew/opt/e2fsprogs/sbin",
+		"/opt/homebrew/opt/llvm/bin"
 	]
 
 	$env.HOMEBREW_NO_ENV_HINTS = true
+
+	$env.LDFLAGS = "-L/opt/homebrew/opt/llvm/lib"
+  	$env.CPPFLAGS = "-I/opt/homebrew/opt/llvm/include"
 }
 
 $env.PATH = ($env.PATH | split row (char esep) | append $path)

@@ -1,7 +1,7 @@
-
 alias grun = go run
 alias cat = bat --style plain,header-filesize,header-filename --paging=never
 alias rsactftool = docker run -it --rm -v $"($env.PWD):/data" rsactftool/rsactftool
+alias code = code-insiders
 
 alias python3 = uv run python3
 alias python = uv run python

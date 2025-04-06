@@ -127,3 +127,6 @@ source $TRUE_HOME/.config/zsh-utils/scripts/git-redef.zsh
 
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/r3dlust/.lmstudio/bin"
+
+# bun completions
+[ -s "/Users/r3dlust/.bun/_bun" ] && source "/Users/r3dlust/.bun/_bun"
