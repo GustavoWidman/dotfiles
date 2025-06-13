@@ -2,12 +2,13 @@
 
 OS="$(uname)"
 
-stow -t ~ home
+stow -S -t ~ home
 
+rm -rf ~/.config/nushell
 if [[ "$OS" == "Darwin" ]]; then
-	sudo stow -t /var/root root
+	sudo stow -S -t /var/root root
 elif [[ "$OS" == "Linux" ]]; then
-	sudo stow -t /root root
+	sudo stow -S -t /root root
 else
     echo "Unknown operating system: $OS. Could not find proper root dir to attach symlinks to."
     exit 1
