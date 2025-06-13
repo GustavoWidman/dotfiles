@@ -2,7 +2,7 @@
 
 OS="$(uname)"
 
-stow -t ~ home
+stow -D -t ~ home
 
 if [[ "$OS" == "Darwin" ]]; then
     sudo stow -D -t /var/root root

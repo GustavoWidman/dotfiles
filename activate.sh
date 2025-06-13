@@ -4,7 +4,6 @@ OS="$(uname)"
 
 stow -S -t ~ home
 
-rm -rf ~/.config/nushell
 if [[ "$OS" == "Darwin" ]]; then
 	sudo stow -S -t /var/root root
 elif [[ "$OS" == "Linux" ]]; then
