@@ -10,9 +10,6 @@ $env.EDITOR = "nano"
 
 $env.TRUE_HOME = utils true_home
 
-# Cache Homebrew environment variables and only update weekly
-utils brew_env 7 | load-env # Update cache weekly
-
 $env.BUN_INSTALL = $"($env.TRUE_HOME)/.bun"
 mut path = [
 	$"($env.BUN_INSTALL)/bin",
@@ -25,6 +22,9 @@ mut path = [
 ]
 
 if $env.OS == "Darwin" {
+	# Cache Homebrew environment variables and only update weekly
+	utils brew_env 7 | load-env # Update cache weekly
+
 	$env.PNPM_HOME = $env.TRUE_HOME + "/Library/pnpm"
 
 	$path ++= [
@@ -43,11 +43,12 @@ if $env.OS == "Darwin" {
 
 	$env.LDFLAGS = "-L/opt/homebrew/opt/llvm/lib"
   	$env.CPPFLAGS = "-I/opt/homebrew/opt/llvm/include"
+
+	source lsblk.nu
+	source utm.nu
 }
 
 $env.PATH = ($env.PATH | split row (char esep) | append $path)
 
 source aliases.nu
-source utm.nu
 source hackingclub.nu
-source lsblk.nu
