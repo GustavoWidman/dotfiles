@@ -1,18 +1,47 @@
 alias grun = go run
 alias cat = bat --style plain,header-filesize,header-filename --paging=never
 alias rsactftool = docker run -it --rm -v $"($env.PWD):/data" rsactftool/rsactftool
-alias code = code-insiders
+alias ubuntinho = docker run --rm -it -v $"($env.PWD):/home/shared" amd64/ubuntu:18.04 /bin/bash -c "cd /home/shared && HOME=/home/shared /bin/bash"
+# alias code = code-insiders
 
 alias python3 = uv run python3
 alias python = uv run python
 
-# todo make this a alias
+alias revshell = uv run penelope
+alias fg = job unfreeze
+
+alias lsusb = cyme --lsusb
+alias unmount = diskutil unmount
+alias umount = diskutil unmount
+
+def --wrapped mount [disk: string, mount_point: path, ...args] {
+	diskutil mount -mountPoint $mount_point $disk ...$args
+}
+
+alias multiplex = zellij options --default-shell nu
+
+def --wrapped ssh [...args] {
+	with-env { TERM: "xterm-256color" } { ^ssh ...$args }
+}
+
+
 def --wrapped tailscale [...args] {
 	if $env.OS == "Darwin" {
 		/Applications/Tailscale.app/Contents/MacOS/Tailscale ...$args
 	} else {
 		^tailscale ...$args
 	}
+}
+
+def psub [] {
+  # Call out to the external mktemp to get a unique temp‐file path
+  let tmp = (mktemp -t | str trim)
+
+  # Write whatever’s coming in ($in) into that file
+  $in | save --raw -f $tmp
+
+  # Emit the path so downstream commands can read it
+  return $tmp
 }
 
 def --wrapped javar [...args] {
@@ -62,6 +91,10 @@ def --wrapped crun [...args] {
 
 def --env "sudo su" [] {
 	with-env { XDG_CONFIG_HOME: $env.XDG_CONFIG_HOME } { ^sudo --preserve-env nu }
+}
+
+def --wrapped --env "sudo" [...args] {
+	^sudo --preserve-env TERMINFO=/Applications/Ghostty.app/Contents/Resources/terminfo ...$args
 }
 
 def --env activate [] {

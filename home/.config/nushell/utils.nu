@@ -10,14 +10,21 @@ export def --env get_cache [] {
 		return $env.CACHE_RECORDS
 	}
 
-	if ($cache_file | path exists) {
-		let cache = open $cache_file
-		$env.CACHE_RECORDS = $cache
-
-		$cache
-	} else {
+	def empty_cache [] {
 		$null_cache_records | save -f $cache_file
 		$null_cache_records
+	}
+
+	if ($cache_file | path exists) {
+		try {
+			let cache = open $cache_file
+			$env.CACHE_RECORDS = $cache
+			$cache
+		} catch {
+			empty_cache
+		}
+	} else {
+		empty_cache
 	}
 }
 
@@ -41,7 +48,7 @@ export def --env true_home [] {
 			dscl . -list /Users UniqueID
 				| ^awk '$2 >= 501 { print $1 }'
 				| ^head -n 1
-				| ^xargs -I {} dscl . -read /Users/{} NFSHomeDirectory
+				| ^dscl . -read /Users/($in) NFSHomeDirectory
 				| ^awk '{ print $2 }'
 				| str trim
 		} else {

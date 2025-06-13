@@ -130,3 +130,11 @@ export PATH="$PATH:/Users/r3dlust/.lmstudio/bin"
 
 # bun completions
 [ -s "/Users/r3dlust/.bun/_bun" ] && source "/Users/r3dlust/.bun/_bun"
+
+# pnpm
+export PNPM_HOME="/Users/r3dlust/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
