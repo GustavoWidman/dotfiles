@@ -4,6 +4,7 @@
 # zmodload zsh/zprof
 
 export ZSH="$HOME/.oh-my-zsh"
+export XDG_CONFIG_HOME="$HOME/.config"
 
 OS="$(uname)"
 ZSH_THEME="r3dlust"
@@ -36,6 +37,33 @@ alias nvim="neovide --fork"
 alias pchain="proxychains -q"
 alias pssh="proxychains -q ssh"
 
+# Zoxide (Lazy Load)
+cd () {
+	unset cd
+
+	eval "$(zoxide init zsh --cmd cd)"
+
+	cd "$@"
+}
+
+# Python UV+Mise venv
+python3() {
+	# if VIRTUAL_ENV is set, then use it
+	if [[ -n "$VIRTUAL_ENV" ]]; then
+		command uv run python3 "$@"
+	else
+		command python3 "$@"
+	fi
+}
+python() {
+	# if VIRTUAL_ENV is set, then use it
+	if [[ -n "$VIRTUAL_ENV" ]]; then
+		command uv run python "$@"
+	else
+		command python "$@"
+	fi
+}
+
 # Lazy load Javar
 javar() {
 	source $TRUE_HOME/.config/zsh-utils/scripts/javar.zsh # Java Run (quick build and then run a Java file)
@@ -65,6 +93,9 @@ if [[ "$OS" == "Darwin" ]]; then
 	# MacOS Rust ESP32 toolkit
 	. $TRUE_HOME/export-esp.sh
 	export PATH="/Applications/UTM.app/Contents/MacOS:$PATH" # UTM on PATH
+	# MacOS e2fsprogs
+	export PATH="/opt/homebrew/opt/e2fsprogs/bin:$PATH"
+  	export PATH="/opt/homebrew/opt/e2fsprogs/sbin:$PATH"
 	alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale" # tailscale fix
 	export HOMEBREW_NO_ENV_HINTS=TRUE
 fi
@@ -93,3 +124,17 @@ source $TRUE_HOME/.config/zsh-utils/scripts/git-redef.zsh
 
 # Profiling (leave off normally)
 # zprof
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/r3dlust/.lmstudio/bin"
+
+# bun completions
+[ -s "/Users/r3dlust/.bun/_bun" ] && source "/Users/r3dlust/.bun/_bun"
+
+# pnpm
+export PNPM_HOME="/Users/r3dlust/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
