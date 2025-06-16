@@ -6,10 +6,10 @@ $env.VIRTUAL_ENV_DISABLE_PROMPT = true
 $env.OS = uname | get operating-system
 $env.HOSTNAME = utils get_hostname
 $env.config.buffer_editor = "nano"
-$env.USER_COLOR = "magenta"
+$env.TRUE_HOME = utils true_home
+$env.USER_COLOR = init init_user_color
 $env.EDITOR = "nano"
 
-$env.TRUE_HOME = utils true_home
 
 $env.BUN_INSTALL = $"($env.TRUE_HOME)/.bun"
 mut path = [
