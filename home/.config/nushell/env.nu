@@ -1,4 +1,5 @@
 use utils.nu
+use init.nu
 
 $env.config.show_banner = false
 $env.VIRTUAL_ENV_DISABLE_PROMPT = true
@@ -49,6 +50,8 @@ if $env.OS == "Darwin" {
 }
 
 $env.PATH = ($env.PATH | split row (char esep) | append $path)
+
+init full_init
 
 source aliases.nu
 source hackingclub.nu
