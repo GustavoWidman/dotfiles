@@ -10,27 +10,21 @@ alias python = uv run python
 alias revshell = uv run penelope
 alias fg = job unfreeze
 
-alias lsusb = cyme --lsusb
-alias unmount = diskutil unmount
-alias umount = diskutil unmount
+if $env.OS == "Darwin" {
+	alias lsusb = cyme --lsusb
+	alias unmount = diskutil unmount
+	alias umount = diskutil unmount
+	alias tailscale = /Applications/Tailscale.app/Contents/MacOS/Tailscale
 
-def --wrapped mount [disk: string, mount_point: path, ...args] {
-	diskutil mount -mountPoint $mount_point $disk ...$args
+	def --wrapped mount [disk: string, mount_point: path, ...args] {
+		diskutil mount -mountPoint $mount_point $disk ...$args
+	}
 }
 
 alias multiplex = zellij options --default-shell nu
 
 def --wrapped ssh [...args] {
 	with-env { TERM: "xterm-256color" } { ^ssh ...$args }
-}
-
-
-def --wrapped tailscale [...args] {
-	if $env.OS == "Darwin" {
-		/Applications/Tailscale.app/Contents/MacOS/Tailscale ...$args
-	} else {
-		^tailscale ...$args
-	}
 }
 
 def psub [] {

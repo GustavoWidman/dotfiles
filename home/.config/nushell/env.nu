@@ -10,6 +10,7 @@ $env.TRUE_HOME = utils true_home
 $env.USER_COLOR = init init_user_color
 $env.EDITOR = "nano"
 
+init init_gitconfig
 
 $env.BUN_INSTALL = $"($env.TRUE_HOME)/.bun"
 mut path = [

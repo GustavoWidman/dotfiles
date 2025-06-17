@@ -78,6 +78,16 @@ export def --env init_user_color () {
 	return (open $"($env.TRUE_HOME)/.user_color" | str trim)
 }
 
+export def --env init_gitconfig () {
+	if not (($"($env.TRUE_HOME)/.gitconfig.username" | path exists)) {
+		let gitconfig = $"[user]
+    name = GustavoWidman \(($env.HOSTNAME)\)
+"
+
+		$gitconfig | save --raw -f $"($env.TRUE_HOME)/.gitconfig.username"
+	}
+}
+
 export def --env full_init () {
 	init_rust_toolchain
 	init_uv

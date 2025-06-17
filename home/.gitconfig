@@ -1,6 +1,8 @@
+[include]
+	path = ~/.gitconfig.username
+
 [user]
 	email = gustavo.widman@sou.inteli.edu.br
-	name = GustavoWidman (laptop-mac)
 	signingkey = ~/.ssh/gh-gustavowidman.pub
 
 [commit]
