@@ -119,7 +119,7 @@ if [[ "$OS" == "Linux" ]]; then
 fi
 
 # Git Push default to SSH (check .gitconfig)
-source $TRUE_HOME/.config/zsh-utils/scripts/git-auto-hostname.zsh
+# source $TRUE_HOME/.config/zsh-utils/scripts/git-auto-hostname.zsh
 source $TRUE_HOME/.config/zsh-utils/scripts/git-redef.zsh
 
 # Profiling (leave off normally)

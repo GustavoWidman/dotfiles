@@ -48,7 +48,7 @@ def --env init_plugins () {
 	}
 
 	# port extension plugin
-	if (plugin list | where name == port_extension | length) == 0 {
+	if (plugin list | where name == "port_extension" | length) == 0 {
 		cargo install --git https://github.com/FMotalleb/nu_plugin_port_extension.git --locked
 		plugin add $"($env.TRUE_HOME)/.cargo/bin/nu_plugin_port_extension"
 	}

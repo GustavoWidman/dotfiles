@@ -21,6 +21,8 @@ mut path = [
 	"/usr/local/bin",
 	$"($env.TRUE_HOME)/.cabal/bin",
 	$"($env.HOME)/.ghcup/bin",
+	"/nix/var/nix/profiles/default/bin/",
+	$"($env.TRUE_HOME)/.nix-profile/bin/",
 ]
 
 if $env.OS == "Darwin" {
