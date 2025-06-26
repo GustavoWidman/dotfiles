@@ -10,14 +10,36 @@ alias python = uv run python
 alias revshell = uv run penelope
 alias fg = job unfreeze
 
-if $env.OS == "Darwin" {
-	alias lsusb = cyme --lsusb
-	alias unmount = diskutil unmount
-	alias umount = diskutil unmount
-	alias tailscale = /Applications/Tailscale.app/Contents/MacOS/Tailscale
+def --wrapped lsusb [...args] {
+	if $env.OS == "Darwin" {
+		cyme --lsusb ...$args
+	} else {
+		^lsusb ...$args
+	}
+}
 
-	def --wrapped mount [disk: string, mount_point: path, ...args] {
-		diskutil mount -mountPoint $mount_point $disk ...$args
+def --wrapped unmount [disk: string, ...args] {
+	if $env.OS == "Darwin" {
+		diskutil unmount $disk ...$args
+	} else {
+		^umount $disk ...$args
+	}
+}
+alias umount = unmount
+
+def --wrapped mount [source: string, directory: path, ...args] {
+	if $env.OS == "Darwin" {
+		diskutil mount -mountPoint $directory $source ...$args
+	} else {
+		^mount $source $directory ...$args
+	}
+}
+
+def --wrapped tailscale [...args] {
+	if $env.OS == "Darwin" {
+		/Applications/Tailscale.app/Contents/MacOS/Tailscale ...$args
+	} else {
+		^tailscale ...$args
 	}
 }
 

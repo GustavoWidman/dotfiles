@@ -2,56 +2,112 @@
 
 def --env init_rust_toolchain () {
 	if not ($"($env.TRUE_HOME)/.cargo" | path exists) {
-		let tmp = (mktemp -t --suffix ".sh" | str trim)
-		/bin/bash -c $"
+		try {
+			let tmp = (mktemp -t --suffix ".sh" | str trim)
+			/bin/bash -c $"
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > ($tmp)
 chmod +x ($tmp)
 ($tmp) -y
 rm ($tmp)"
+		} catch {
+			print $"(ansi light_gray)[(ansi reset)(ansi red_bold)!(ansi reset)(ansi light_gray)](ansi reset)(ansi red) Failed to install Rust toolchain. Please install it manually.(ansi reset)\n"
+			return false
+		}
 	}
+
+
+	if not (($"($env.TRUE_HOME)/.cargo/bin/cargo-binstall" | path exists) or ((which cargo-binstall | length) > 0)) {
+		try { cargo install cargo-binstall --locked } catch {
+			print $"(ansi light_gray)[(ansi reset)(ansi red_bold)!(ansi reset)(ansi light_gray)](ansi reset)(ansi red) Failed to install zoxide. Please install it manually.(ansi reset)\n"
+			return false
+		}
+	}
+
+	return true
 }
 
 def --env init_uv () {
 	if not (($"($env.TRUE_HOME)/.local/bin/uv" | path exists) or ((which uv | length) > 0)) {
-		curl -LsSf https://astral.sh/uv/install.sh | sh
+		try { curl -LsSf https://astral.sh/uv/install.sh | sh } catch {
+			print $"(ansi light_gray)[(ansi reset)(ansi red_bold)!(ansi reset)(ansi light_gray)](ansi reset)(ansi red) Failed to install uv. Please install it manually.(ansi reset)\n"
+			return false
+		}
 	}
+
+	return true
 }
 
 def --env init_mise () {
 	if not (($"($env.TRUE_HOME)/.local/bin/mise" | path exists) or ((which mise | length) > 0)) {
-		curl https://mise.run/ | sh
+		try { curl https://mise.run/ | sh } catch {
+			print $"(ansi light_gray)[(ansi reset)(ansi red_bold)!(ansi reset)(ansi light_gray)](ansi reset)(ansi red) Failed to install mise. Please install it manually.(ansi reset)\n"
+			return false
+		}
 	}
+
+	return true
 }
 
 # REQUIRES RUST TOOLCHAIN
 def --env init_zoxide () {
 	if not (($"($env.TRUE_HOME)/.cargo/bin/zoxide" | path exists) or ((which zoxide | length) > 0)) {
-		cargo install zoxide --locked
+		try { cargo-binstall zoxide --locked --no-confirm } catch {
+			print $"(ansi light_gray)[(ansi reset)(ansi red_bold)!(ansi reset)(ansi light_gray)](ansi reset)(ansi red) Failed to install zoxide. Please install it manually.(ansi reset)\n"
+			return false
+		}
 	}
+
+	return true
 }
 
 # REQUIRES RUST TOOLCHAIN
 def --env init_bat () {
 	if not (($"($env.TRUE_HOME)/.cargo/bin/bat" | path exists) or ((which bat | length) > 0)) {
-		cargo install bat --locked
+		try { cargo-binstall bat --locked --no-confirm } catch {
+			print $"(ansi light_gray)[(ansi reset)(ansi red_bold)!(ansi reset)(ansi light_gray)](ansi reset)(ansi red) Failed to install bat. Please install it manually.(ansi reset)\n"
+			return false
+		}
 	}
+
+	return true
 }
 
 # REQUIRES RUST TOOLCHAIN
 def --env init_plugins () {
 	let plugins = plugin list;
+	mut restart_required = false
 
 	# gstat plugin
-	if (plugin list | where name == gstat | length) == 0 {
-		cargo install nu_plugin_gstat --locked
-		plugin add $"($env.TRUE_HOME)/.cargo/bin/nu_plugin_gstat"
+	if ((not ($"($env.TRUE_HOME)/.cargo/bin/nu_plugin_gstat" | path exists)) or ((plugin list | where name == gstat | length) == 0)) {
+		try {
+			cargo-binstall nu_plugin_gstat --locked --no-confirm
+			plugin add $"($env.TRUE_HOME)/.cargo/bin/nu_plugin_gstat"
+
+			$restart_required = true
+		} catch {
+			print $"(ansi light_gray)[(ansi reset)(ansi red_bold)!(ansi reset)(ansi light_gray)](ansi reset)(ansi red) Failed to install gstat plugin. Please install it manually.(ansi reset)\n"
+			return false
+		}
 	}
 
 	# port extension plugin
-	if (plugin list | where name == "port_extension" | length) == 0 {
-		cargo install --git https://github.com/FMotalleb/nu_plugin_port_extension.git --locked
-		plugin add $"($env.TRUE_HOME)/.cargo/bin/nu_plugin_port_extension"
+	if ((not ($"($env.TRUE_HOME)/.cargo/bin/nu_plugin_port_extension" | path exists)) or ((plugin list | where name == "port_extension" | length) == 0)) {
+		try {
+			cargo install --git https://github.com/FMotalleb/nu_plugin_port_extension.git --locked
+			plugin add $"($env.TRUE_HOME)/.cargo/bin/nu_plugin_port_extension"
+
+			$restart_required = true
+		} catch {
+			print $"(ansi light_gray)[(ansi reset)(ansi red_bold)!(ansi reset)(ansi light_gray)](ansi reset)(ansi red) Failed to install port extension plugin. Please install it manually.(ansi reset)\n"
+			return false
+		}
 	}
+
+	if $restart_required {
+		nu
+	}
+
+	return true
 }
 
 export def --env init_user_color () {
@@ -75,7 +131,7 @@ export def --env init_user_color () {
 	}
 
 	# load the user color from the file
-	return (open $"($env.TRUE_HOME)/.user_color" | str trim)
+	return (open $"($env.TRUE_HOME)/.user_color" | str trim) | default "red"
 }
 
 export def --env init_gitconfig () {
@@ -89,10 +145,12 @@ export def --env init_gitconfig () {
 }
 
 export def --env full_init () {
-	init_rust_toolchain
-	init_uv
-	init_mise
-	init_zoxide
-	init_bat
-	init_plugins
+	let ok_rust = init_rust_toolchain
+	let ok_uv = init_uv
+	let ok_mise = init_mise
+	let ok_zoxide = init_zoxide
+	let ok_bat = init_bat
+	let ok_plugins = init_plugins
+
+	return ($ok_rust and $ok_uv and $ok_mise and $ok_zoxide and $ok_bat and $ok_plugins)
 }

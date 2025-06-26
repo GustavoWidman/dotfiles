@@ -39,7 +39,7 @@ def "hackingclub stop" [] {
 	print $"(ansi reset)(ansi light_gray)[(ansi reset)(ansi green_bold)+(ansi reset)(ansi light_gray)](ansi reset)(ansi white_dimmed) Stopping HackingClub services..."
 
 	let openvpn_alive = ^ps -ax -o pid= -o command=  | parse "{pid} {cmd}" | where cmd == $"openvpn ($env.TRUE_HOME | path join 'Cybersec/hackingclub/hackingclub.ovpn')"
-	let ports = port list -lt
+	let ports = do { port list -lt }
 
 	# grant sudo grace period
 	if not ($openvpn_alive | is-empty) {
@@ -70,7 +70,7 @@ def "hackingclub stop" [] {
 def hackingclub [] {
 	print $"(ansi light_gray)[(ansi reset)(ansi green_bold)+(ansi reset)(ansi light_gray)](ansi reset)(ansi white_dimmed) Starting hackingclub services...(ansi reset)(ansi red_bold)"
 	let openvpn_alive = ^ps -ax -o pid= -o command=  | parse "{pid} {cmd}" | where cmd == $"openvpn ($env.TRUE_HOME | path join 'Cybersec/hackingclub/hackingclub.ovpn')"
-	let ports = port list -lt
+	let ports = do { port list -lt }
 
 	# grant sudo grace period
 	sudo true
