@@ -90,21 +90,8 @@ def --env init_plugins () {
 		}
 	}
 
-	# port extension plugin
-	if ((not ($"($env.TRUE_HOME)/.cargo/bin/nu_plugin_port_extension" | path exists)) or ((plugin list | where name == "port_extension" | length) == 0)) {
-		try {
-			cargo install --git https://github.com/FMotalleb/nu_plugin_port_extension.git --locked
-			plugin add $"($env.TRUE_HOME)/.cargo/bin/nu_plugin_port_extension"
-
-			$restart_required = true
-		} catch {
-			print $"(ansi light_gray)[(ansi reset)(ansi red_bold)!(ansi reset)(ansi light_gray)](ansi reset)(ansi red) Failed to install port extension plugin. Please install it manually.(ansi reset)\n"
-			return false
-		}
-	}
-
 	if $restart_required {
-		nu
+		exec nu
 	}
 
 	return true

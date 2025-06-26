@@ -1,4 +1,5 @@
 use utils.nu
+use ports.nu
 use init.nu
 
 $env.config.show_banner = false
@@ -57,4 +58,4 @@ $env.PATH = ($env.PATH | split row (char esep) | append $path)
 init full_init
 
 source aliases.nu
-# source hackingclub.nu
+source hackingclub.nu
