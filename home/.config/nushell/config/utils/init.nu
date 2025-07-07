@@ -1,5 +1,3 @@
-
-
 def --env init_rust_toolchain () {
 	if not ($"($env.TRUE_HOME)/.cargo" | path exists) {
 		try {

@@ -10,53 +10,23 @@ alias python = uv run python
 alias revshell = uv run penelope
 alias fg = job unfreeze
 
-def --wrapped lsusb [...args] {
-	if $env.OS == "Darwin" {
-		cyme --lsusb ...$args
-	} else {
-		^lsusb ...$args
-	}
-}
-
-def --wrapped unmount [disk: string, ...args] {
-	if $env.OS == "Darwin" {
-		diskutil unmount $disk ...$args
-	} else {
-		^umount $disk ...$args
-	}
-}
-alias umount = unmount
-
-def --wrapped mount [source: string, directory: path, ...args] {
-	if $env.OS == "Darwin" {
-		diskutil mount -mountPoint $directory $source ...$args
-	} else {
-		^mount $source $directory ...$args
-	}
-}
-
-def --wrapped tailscale [...args] {
-	if $env.OS == "Darwin" {
-		/Applications/Tailscale.app/Contents/MacOS/Tailscale ...$args
-	} else {
-		^tailscale ...$args
-	}
-}
-
 alias multiplex = zellij options --default-shell nu
+
+def --wrapped --env "sudo" [...args] {
+	^sudo --preserve-env TERMINFO=($env.TERMINFO) ...$args
+}
+
+alias "sudo su" = sudo nu
 
 def --wrapped ssh [...args] {
 	with-env { TERM: "xterm-256color" } { ^ssh ...$args }
 }
 
 def psub [] {
-  # Call out to the external mktemp to get a unique temp‐file path
   let tmp = (mktemp -t | str trim)
 
-  # Write whatever’s coming in ($in) into that file
   $in | save --raw -f $tmp
 
-  # Emit the path so downstream commands can read it
   return $tmp
 }
 
@@ -105,16 +75,8 @@ def --wrapped crun [...args] {
 	./dist/($base_name) ...$other_args
 }
 
-def --env "sudo su" [] {
-	with-env { XDG_CONFIG_HOME: $env.XDG_CONFIG_HOME } { ^sudo --preserve-env nu }
-}
-
-def --wrapped --env "sudo" [...args] {
-	^sudo --preserve-env TERMINFO=/Applications/Ghostty.app/Contents/Resources/terminfo ...$args
-}
-
 def --env activate [] {
-	use ($nu.default-config-dir | path join hooks.nu)
+	use ($nu.default-config-dir | path join config/utils/hooks.nu)
 
 	if "VIRTUAL_ENV" in $env {
 		return "Already inside a virtual environment, deactivate first"

@@ -1,4 +1,4 @@
-def clean-scan [
+export def clean-scan [
 	file: string,
 	outfile: string,
 	--force (-f),
@@ -34,7 +34,7 @@ def clean-scan [
 		| if $force { save --raw --force $outfile } else { save --raw $outfile }
 }
 
-def "hackingclub stop" [] {
+export def stop [] {
 	print $"(ansi reset)(ansi light_gray)[(ansi reset)(ansi green_bold)+(ansi reset)(ansi light_gray)](ansi reset)(ansi white_dimmed) Stopping HackingClub services..."
 
 	let openvpn_alive = ^ps -ax -o pid= -o command=  | parse "{pid} {cmd}" | where cmd == $"openvpn ($env.TRUE_HOME | path join 'Cybersec/hackingclub/hackingclub.ovpn')"
@@ -66,7 +66,7 @@ def "hackingclub stop" [] {
 	}
 }
 
-def hackingclub [] {
+export def main [] {
 	print $"(ansi light_gray)[(ansi reset)(ansi green_bold)+(ansi reset)(ansi light_gray)](ansi reset)(ansi white_dimmed) Starting hackingclub services...(ansi reset)(ansi red_bold)"
 	let openvpn_alive = ^ps -ax -o pid= -o command=  | parse "{pid} {cmd}" | where cmd == $"openvpn ($env.TRUE_HOME | path join 'Cybersec/hackingclub/hackingclub.ovpn')"
 	let ports = ports -lt

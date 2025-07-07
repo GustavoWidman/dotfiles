@@ -74,14 +74,12 @@ export def --env brew_env [brew_cache_max_age_days: int] {
 	) {
 		$cache.brew.env
 	} else {
-		# Otherwise fetch new environment and cache it
-			let new_env = (/opt/homebrew/bin/brew shellenv csh
-				| lines
-				| parse --regex 'setenv (\w+) "?(.+)"?;'
-				| transpose -r
-				| into record)
+		let new_env = (/opt/homebrew/bin/brew shellenv csh
+			| lines
+			| parse --regex 'setenv (\w+) "?(.+)"?;'
+			| transpose -r
+			| into record)
 
-		# $new_env | save -f $brew_cache_file
 		save_to_cache brew {
 			env: $new_env,
 			modified: (date now)

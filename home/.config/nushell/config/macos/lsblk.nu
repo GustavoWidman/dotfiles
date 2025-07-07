@@ -1,4 +1,4 @@
-def lsblk [--all (-a)] {
+export def main [--all (-a)] {
     let diskutil_output = (diskutil list | complete | get stdout)
 
     # Parse the diskutil output into structured data
