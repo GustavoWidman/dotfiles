@@ -1,6 +1,7 @@
 alias grun = go run
 alias cat = bat --style plain,header-filesize,header-filename --paging=never
 alias rsactftool = docker run -it --rm -v $"($env.PWD):/data" rsactftool/rsactftool
+alias jwt-tool = docker run -it --network "host" --rm -v $"($env.PWD):/tmp" -v $"($env.TRUE_HOME)/.jwt_tool:/root/.jwt_tool" ticarpi/jwt_tool
 alias ubuntinho = docker run --rm -it -v $"($env.PWD):/home/shared" amd64/ubuntu:18.04 /bin/bash -c "cd /home/shared && HOME=/home/shared /bin/bash"
 # alias code = code-insiders
 
@@ -13,7 +14,11 @@ alias fg = job unfreeze
 alias multiplex = zellij options --default-shell nu
 
 def --wrapped --env "sudo" [...args] {
-	^sudo --preserve-env TERMINFO=($env.TERMINFO) ...$args
+	if ($env.TERMINFO? | is-not-empty) {
+		^sudo --preserve-env TERMINFO=($env.TERMINFO) ...$args
+	} else {
+		^sudo --preserve-env ...$args
+	}
 }
 
 alias "sudo su" = sudo nu
