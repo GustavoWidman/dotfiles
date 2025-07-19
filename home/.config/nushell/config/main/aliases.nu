@@ -21,7 +21,7 @@ def --wrapped --env "sudo" [...args] {
 	}
 }
 
-alias "sudo su" = sudo nu
+alias "sudo su" = sudo (which nu | get path | first)
 
 def --wrapped ssh [...args] {
 	with-env { TERM: "xterm-256color" } { ^ssh ...$args }
